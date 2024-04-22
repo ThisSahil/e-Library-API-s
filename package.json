@@ -4,9 +4,10 @@
   "description": "apis for books library",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.ts"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "@types/bcrypt": "^5.0.2",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
@@ -15,10 +16,17 @@
     "@types/mongoose": "^5.11.97",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.5",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.0.0",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.4",
+    "typescript-eslint": "^7.7.1"
   },
   "author": "Sahil Chhabra",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
