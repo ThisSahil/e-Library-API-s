@@ -4,13 +4,15 @@ import userRouter from "./user/userRouter";
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.json({
     message: "Welcome to eLib Api's",
   });
 });
 
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 
 // Global error handler
 
