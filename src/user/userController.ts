@@ -4,7 +4,6 @@ import userModel from "./userModel";
 import bcrypt from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { config } from "../config/config";
-import { access } from "fs";
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
@@ -38,10 +37,43 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       expiresIn: "7d",
     });
 
-    res.json({ accessToken: token });
+    res.status(201).json({ accessToken: token });
   } catch (error) {
     next(createHttpError(500, "Error while creating user"));
   }
 };
 
-export { createUser };
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(createHttpError(400, "All fields are required"));
+  }
+
+  try {
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return next(createHttpError(404, "user with this email does not exists"));
+    }
+
+    const validPassword = await bcrypt.compare(
+      password,
+      user.password as string
+    );
+
+    if (!validPassword) {
+      return next(createHttpError(400, "username or password is incorrect"));
+    }
+
+    const token = sign({ sub: user._id }, config.jwtSecret as string, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).json({ message: "user logged In", token: token });
+  } catch (error) {
+    next(createHttpError(500, "Error while fetching user"));
+  }
+};
+
+export { createUser, loginUser };
