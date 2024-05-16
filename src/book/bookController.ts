@@ -66,7 +66,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateBook = async (req: Request, res: Response, next: NextFunction) => {
-  const bookId = req.params;
+  const bookId = req.params.bookId;
 
   const files = req.files as { [filename: string]: Express.Multer.File[] };
 
